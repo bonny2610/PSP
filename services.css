@@ -1,0 +1,378 @@
+
+/* --- PHẦN 1: DỊCH VỤ CUNG CẤP (Layout phức tạp) --- */
+.service-section {
+    position: relative; /* Container cha cho phép định vị tuyệt đối */
+    padding-top: 50px;
+    padding-bottom: 350px; /* Tạo khoảng trống cho ảnh nền và footer text */
+    overflow: hidden; 
+    background-color: white;
+}
+
+/* --- Ảnh nền thành phố --- */
+.city-background {
+    position: absolute;
+    bottom: 0; 
+    left: 0;
+    width: 100%;
+    height: 350px; 
+    z-index: 1; /* Nằm dưới sơ đồ */
+    /* Thay 'city.jpg' bằng ảnh của mày nha */
+    background: url('city.jpg') no-repeat center bottom; 
+    background-size: cover;
+    /* Dùng mask-image để tạo hiệu ứng mờ dần lên trên, giống như trong hình gốc */
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+}
+
+/* --- Sơ đồ QUẢN LÝ VẬN HÀNH --- */
+.operation-management-diagram {
+    position: relative;
+    width: 900px; /* Chiều rộng tổng thể của sơ đồ */
+    height: 450px; /* Chiều cao tổng thể của sơ đồ */
+    margin: 50px auto; /* Căn giữa */
+    z-index: 10; /* Nằm trên ảnh nền */
+    text-align: center;
+}
+.service-item {
+    position: absolute;
+    width: 200px; /* Chiều rộng hộp nội dung */
+    text-align: left;
+    font-size: 0.9em;
+    padding: 10px;
+    z-index: 10;
+}
+
+/* --- Định vị tuyệt đối cho 6 mục (Căn góc) --- */
+/* Item 1, 2, 3 (Bên trái) */
+.item-1 { top: 30px; left: 0; }
+.item-2 { top: 180px; left: -100px; }
+.item-3 { bottom: 30px; left: 0; }
+
+/* Item 4, 5, 6 (Bên phải) */
+.item-4 { top: 30px; right: 0; text-align: right; } 
+.item-5 { top: 180px; right: -100px; text-align: right; }
+.item-6 { bottom: 30px; right: 0; text-align: right; }
+
+/* Đẩy số thứ tự sang phải cho các mục bên phải */
+.item-4 .number-circle,
+.item-5 .number-circle,
+.item-6 .number-circle { 
+    float: right; 
+}
+.item-4 p, .item-5 p, .item-6 p {
+    clear: both; /* Đảm bảo chữ nằm dưới số */
+}
+
+/* --- Thêm đường nét đứt (Hơi phức tạp, dùng pseudo-elements) --- */
+/* Đây chỉ là ví dụ đơn giản, nếu muốn chính xác phải tính góc, ở đây chỉ làm đường gần nhất */
+
+/* Căn chỉnh vị trí đường nét đứt cho từng mục */
+.item-1::before { top: 50%; left: 100%; transform: translate(-50%, -50%); width: 150px; height: 150px; }
+.item-4::before { top: 50%; right: 100%; transform: translate(50%, -50%); width: 150px; height: 150px; }
+/* Mấy mục còn lại mày cần tinh chỉnh kỹ hơn, hoặc dùng SVG để vẽ sẽ dễ hơn! */
+
+
+/* --- Footer Page Number (Chữ "4 PSP URBAN..." dưới cùng) --- */
+.page-number-footer {
+    position: absolute;
+    bottom: 10px;
+    left: 40px;
+    font-size: 0.9em;
+    color: #555;
+    z-index: 20; /* Đảm bảo nằm trên cùng */
+}
+.page-number-footer span {
+    font-weight: bold;
+    color: #007bff;
+    margin-right: 5px;
+}
+
+
+/* --- PHẦN 2: DỊCH VỤ TƯ VẤN (Sử dụng Flexbox) --- */
+.consulting-section {
+    padding: 50px 20px;
+    background-color: white;
+    position: relative;
+    text-align: center;
+}
+
+.title-divider {
+    position: relative;
+    padding-bottom: 20px;
+}
+/* Gạch ngang dưới tiêu đề */
+.title-divider::after { 
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 3px;
+    background-color: #007bff;
+}
+
+.consulting-list {
+    display: flex; /* Flexbox cho 5 mục nằm ngang */
+    justify-content: center; /* Căn giữa */
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu màn hình nhỏ */
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.consulting-item {
+    width: 150px;
+    text-align: center;
+}
+
+.item-circle {
+  width: 120px;
+  height: 120px;
+  border: 2px solid #007bff;
+  color: #007bff;
+  border-radius: 50%;
+  font-weight: bold;
+  margin: 0 auto 15px;
+  box-shadow: 0 0 0 8px rgba(0, 123, 255, 0.1);
+  background-color: white;
+
+  display: flex;              /* ✅ căn giữa bằng Flexbox */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+footer {
+  background-color: #003366; /* ✅ trùng màu header */
+  color: #fff;
+  padding: 50px 0 30px;
+  font-family: 'Montserrat', sans-serif;
+}
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 3rem;
+  padding: 0 2rem;
+}
+
+.footer-info h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.footer-info p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+  color: #e6e6e6;
+}
+
+.footer-links h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.8rem;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  color: #ffcc00; /* ✅ vàng nổi bật */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #ffffff; /* ✅ hover thành trắng */
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 15px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+footer {
+  animation: fadeInUp 1s ease forwards;
+}
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+}
+/* --- Responsive cơ bản --- */
+@media (max-width: 992px) {
+    .operation-management-diagram {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .main-circle {
+        position: relative;
+        transform: none;
+        top: auto;
+        left: auto;
+        margin: 20px auto;
+    }
+    .service-item {
+        position: relative; /* Chuyển sang flow bình thường */
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+        left: auto;
+        right: auto;
+    }
+    .service-item::before {
+        display: none; /* Ẩn đường nét đứt ở mobile */
+    }
+    .number-circle {
+        float: none;
+        margin: 0 auto 5px;
+    }
+    .consulting-list {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+body {
+  font-family: 'Montserrat', sans-serif; /* ✅ font đều */
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #003366;
+  color: white;
+  display: flex;
+  justify-content: space-between; /* ✅ căn trái phải */
+  align-items: center;
+  padding: 0.5rem 2rem;
+  height: 60px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.logo {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 300;
+  font-size: 0.95 rem;
+}
+
+body {
+  margin-top: 60px; /* ✅ đẩy nội dung xuống dưới header cố định */
+}
+.service-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;         /* ✅ căn giữa theo chiều ngang */
+  justify-content: center;
+  text-align: center;
+  max-width: 250px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.number-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.service-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.operation-diagram {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 500px;
+  margin: 0 auto 60px;
+}
+
+.center-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 180px;
+}
+
+.center-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.circle-item {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.3;
+  box-shadow: 0 0 0 6px rgba(0, 123, 255, 0.2);
+}
+
+/* Bên trái */
+.item-1 { top: 10%; left: 5%; }
+.item-2 { top: 40%; left: 0%; }
+.item-3 { bottom: 10%; left: 5%; }
+
+/* Bên phải */
+.item-4 { top: 10%; right: 5%; }
+.item-5 { top: 40%; right: 0%; }
+.item-6 { bottom: 10%; right: 5%; }
