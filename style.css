@@ -1,9 +1,10 @@
-/* ============================================
-   PSP URBAN SERVICES - STYLE.CSS
-   Phiên bản: Gọn gàng, responsive, cân header
-   ============================================ */
 
-/* RESET & BASE */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 
 html, body {
   font-family: 'Montserrat', sans-serif;
